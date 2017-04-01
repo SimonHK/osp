@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>测试</title>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.encoding.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        //测试脚本
+        $("#logonBtn").click(function(){
+            var data = {
+                appKey:$("#appKey").val(),
+                userName:$("#userName").val(),
+                password:$("#password").val(),
+                /*method:"user.getSession",*/
+                method:"user.logon",
+                messageFormat:"json",
+                v:"1.0"
+            };
+            signBySha1(data);
+            $.get($("#routerUrl").val(),data,function(data,textStatus){
+                $("#result").html("");
+                $("#result").fadeOut();
+                var date = (new Date());
+                var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                $("#result").html("<b>time:</b>"+time+ "<br/>"+
+                                  "<b>data:</b><br/>"+ JSON.stringify(data) +"<br/>"+
+                                  "<b>textStatus:</b><br/>"+textStatus);
+                $("#result").fadeIn();
+            });
+        });
+        //测试脚本
+        $("#jsonp").click(function(){
+            var data={
+                appKey:$("#appKey").val(),
+                userName:$("#userName").val(),
+//                password:$("#password").val(),  //password不签名！
+                method:"user.getSession",
+                messageFormat:"json",
+                v:"1.0"
+            };
+            signBySha1(data);
+            $.ajax({
+                type: "get",
+                async: false,
+                url: $("#routerUrl").val(),
+                data:data,
+                dataType: "jsonp",
+                jsonp: "__invoke",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+//                jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+                success: function(data,textStatus){
+
+                    $("#result").html("");
+                    $("#result").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#result").html("<b>time:</b>"+time+ "<br/>"+
+                            "<b>data:</b><br/>"+ JSON.stringify(data) +"<br/>"+
+                            "<b>textStatus:</b><br/>"+textStatus);
+                    $("#result").fadeIn();
+                },
+                error: function(xmlHttpRequest,textStatus,errorThrown){
+                    $("#result").html("");
+                    $("#result").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#result").html("<b>time:</b>"+time+ "<br/>"+
+                            "<b>data:</b><br/>"+ JSON.stringify(xmlHttpRequest) +"<br/>"+
+                            "<b>textStatus:</b><br/>"+textStatus);
+                    $("#result").fadeIn();
+                }
+            });
+        });
+
+        function signBySha1(data){
+          var secret = $("#secret").val();
+          var tempStr = secret+ "appKey"+data["appKey"];
+          tempStr += "messageFormat"+data["messageFormat"];
+          tempStr += "method"+data["method"];
+//          tempStr += "password"+data["password"];
+          tempStr += "userName"+data["userName"];
+          tempStr += "v"+data["v"];
+          tempStr += secret;
+          var signData = $.encoding.digests.hexSha1Str(tempStr);
+          data["sign"]=signData;
+          return data;
+        };
+        //测试脚本JSON
+        $("#methodgetJson").click(function(){
+            var data={
+                appKey:$("#appKey").val(),
+                userName:$("#userName").val(),
+//                password:$("#password").val(),  //password不签名！
+                method:$("#methodName").val(),
+                messageFormat:$("#getDataType").val(),
+                v:$("#methodVersin").val()
+            };
+            signBySha1(data);
+            $.ajax({
+                type: "get",
+                async: false,
+                url: $("#routerUrl").val(),
+                data:data,
+                dataType: "jsonp",
+                jsonp: "__invoke",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+//                jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+                success: function(data,textStatus){
+
+                    $("#methodResult").html("");
+                    $("#methodResult").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#methodResult").html("<b>time:</b>"+time+ "<br/>"+
+                        "<b>data:</b><br/>"+ JSON.stringify(data) +"<br/>"+
+                        "<b>textStatus:</b><br/>"+textStatus);
+                    $("#methodResult").fadeIn();
+                },
+                error: function(xmlHttpRequest,textStatus,errorThrown){
+                    $("#methodResult").html("");
+                    $("#methodResult").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#methodResult").html("<b>time:</b>"+time+ "<br/>"+
+                        "<b>data:</b><br/>"+ JSON.stringify(xmlHttpRequest) +"<br/>"+
+                        "<b>textStatus:</b><br/>"+textStatus);
+                    $("#methodResult").fadeIn();
+                }
+            });
+        });
+
+        $("#methodgetxml").click(function(){
+            var data={
+                appKey:$("#appKey").val(),
+                userName:$("#userName").val(),
+//                password:$("#password").val(),  //password不签名！
+                method:$("#methodName").val(),
+                messageFormat:$("#getDataType").val(),
+                v:$("#methodVersin").val(),
+                travelPage:$("#travelPage").val
+            };
+            signBySha1(data);
+            $.ajax({
+                type: "get",
+                async: false,
+                url: $("#routerUrl").val(),
+                data:data,
+                dataType: "jsonp",
+                jsonp: "__invoke",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+//                jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+                success: function(data,textStatus){
+
+                    $("#methodResult").html("");
+                    $("#methodResult").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#methodResult").html("<b>time:</b>"+time+ "<br/>"+
+                        "<b>data:</b><br/>"+ JSON.stringify(data) +"<br/>"+
+                        "<b>textStatus:</b><br/>"+textStatus);
+                    $("#methodResult").fadeIn();
+                },
+                error: function(xmlHttpRequest,textStatus,errorThrown){
+                    $("#methodResult").html("");
+                    $("#methodResult").fadeOut();
+                    var date = (new Date());
+                    var time = date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+                    $("#methodResult").html("<b>time:</b>"+time+ "<br/>"+
+                        "<b>data:</b><br/>"+ JSON.stringify(xmlHttpRequest) +"<br/>"+
+                        "<b>textStatus:</b><br/>"+textStatus);
+                    $("#methodResult").fadeIn();
+                }
+            });
+        });
+
+    })
+    </script>
+    <style type="text/css">
+         input[type=text]{width: 500px;}
+         input[type=button]{width: 100px;}
+    </style>
+</head>
+<body>
+
+
+   基础设置
+   <hr/>
+   <div>
+      1.router url:<input id="routerUrl" type="text" value="http://localhost:8989/nswtapiserver/router"/> <br/>
+      2.appkey:<input id="appKey" type="text" value="00001"/>   <br/>
+      3.secret:<input id="secret" type="text" value="abcdeabcdeabcdeabcdeabcde"/>    <br/>
+   </div>
+   <br/>
+   登录测试：
+   <hr/>
+     1.用户名：<input id="userName" type="text" value="tomson"/><br/>
+     2.密码：<input id="password" type="text" value="123456"/><br/>
+   请求结果： <div id="result" style="background-color: #EFEFEF"></div>
+   <input id="logonBtn" type="button" value="提交"/>
+   <input id="jsonp" type="button" value="JSONP"/>
+   <hr/>
+   数据接口测试：<br/>
+   [全量工商关联关系]:allrelationinfo.list [系客户群基本信息]:group_info.list [系客户群成员信息]:groupmemberinfo.list<br/>
+   [系集中地区信息]:group_region_info.list [系主营业务信息]:group_trade_info.list [系客户分析结果快照信息]:user_anal_result.list<br/>
+   [我的关注信息]:user_anal_result_2.list<br/>
+   <hr/>
+   1.接口方法名 <input id="methodName" type="text" value="hongkaitest.list"/> 接口参数:<input id="travelPage" type="text" value="test001"/> <br/>
+   2.方法版本  <input id="methodVersin" type="text" value="1.0"/><br/>
+   3.数据格式  <input id="getDataType" type="text" value="json"/><br/>
+   请求结果：<div id="methodResult" style="background-color: #EFEFEF"></div>
+   <input id="methodgetJson" type="button" value="获取JSON数据"/>
+</body>
+</html>
