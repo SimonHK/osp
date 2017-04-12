@@ -21,7 +21,7 @@ import static org.testng.Assert.assertTrue;
  * @author Admin
  * @version 1.0
  */
-public class RopSampleClientIT {
+public class OspSampleClientIT {
     public static final String APP_KEY = "00001";
     public static final String APP_SECRET = "abcdeabcdeabcdeabcdeabcde";
 
