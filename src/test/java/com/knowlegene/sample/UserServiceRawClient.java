@@ -32,7 +32,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class UserServiceRawClient {
 
-    public static final String SERVER_URL = "http://localhost:8088/router";
+    public static final String SERVER_URL = "http://localhost:8080/osp-1.0.0-SNAPSHOT/router";
 
     private String sessionId;
 
@@ -864,7 +864,7 @@ public class UserServiceRawClient {
     public void testStreamOutput() {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> form = new HashMap<String, String>();
-        form.put("method", "img.get");//<--指定方法名称
+        form.put("method", "allrelationinfo.list");//<--指定方法名称
         form.put("appKey", "00001");
         form.put("v", "1.0");
         form.put("locale", "en");
@@ -881,8 +881,8 @@ public class UserServiceRawClient {
                         "?method={method}&appKey={appKey}&v={v}&sessionId={sessionId}&locale={locale}" +
                         "&messageFormat={messageFormat}&sign={sign}",
                 String.class, form);
-//        System.out.println("response:" + response);
-//        assertTrue(response.indexOf("Is StreamOutput!") > -1);
+       System.out.println("response:" + response);
+        assertTrue(response.indexOf("Is StreamOutput!") > -1);
     }
 
 }

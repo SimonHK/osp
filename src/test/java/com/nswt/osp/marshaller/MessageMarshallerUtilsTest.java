@@ -31,7 +31,7 @@ public class MessageMarshallerUtilsTest {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
-    @Test
+/*    @Test
     public void testMarshallerOspRequest() throws Exception {
         OspRequest ospRequest = mock(OspRequest.class);
         OspRequestContext msc = mock(OspRequestContext.class);
@@ -93,6 +93,6 @@ public class MessageMarshallerUtilsTest {
         assertTrue(message.indexOf("20120101") > -1);
 
         logger.info("json:{}",message);
-    }
+    }*/
 }
 

@@ -23,10 +23,16 @@
 
     <dependencies>
 
-        <dependency>
+<!--        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <version>3.0</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--日志依赖-->
@@ -47,7 +53,6 @@
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
-
         <!--osp 核心框架依赖包开始-->
         <dependency>
             <groupId>commons-lang</groupId>
@@ -273,7 +278,32 @@
             <artifactId>validation-api</artifactId>
             <version>1.1.0.Final</version>
         </dependency>
-
+        <!--websocket 依赖包-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>4.0.1.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>4.0.1.RELEASE</version>
+        </dependency>
+ <!--       <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.17</version>
+        </dependency>-->
     </dependencies>
 
 <!--    <build>
@@ -301,6 +331,18 @@
     <build>
         <finalName>${artifactId}-${version}</finalName>
         <plugins>
+<!--            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -308,7 +350,6 @@
                 <configuration>
                     <warSourceDirectory>src/main/webapp</warSourceDirectory>
                 </configuration>
-
             </plugin>
             <!-- For Maven Tomcat Plugin 。MAVEN中的TOMCAT插件配置-->
             <plugin>
@@ -341,13 +382,14 @@
     <properties>
         <file.encoding>UTF-8</file.encoding>
         <java.version>1.5</java.version>
-        <servlet.version>2.5</servlet.version>
-        <slf4j.version>1.6.1</slf4j.version>
-        <log4j.version>1.2.16</log4j.version>
+        <servlet.version>3.1.0</servlet.version>
+        <slf4j.version>1.8.0-alpha0</slf4j.version>
+        <log4j.version>1.2.17</log4j.version>
         <jaxb-api.version>2.2.6</jaxb-api.version>
         <jaxb-impl.version>2.1</jaxb-impl.version>
         <woodstox.version>4.1.5</woodstox.version>
-        <hibernate.version>4.2.0.Final</hibernate.version>
+        <!--<hibernate.version>4.2.0.Final</hibernate.version>-->
+        <hibernate.version>5.2.5.Final</hibernate.version>
         <activation.version>1.1.1</activation.version>
         <commonslang.version>2.4</commonslang.version>
         <codec.version>1.6</codec.version>
@@ -357,8 +399,8 @@
         <mockito.version>1.8.5</mockito.version>
         <unitils.version>3.3</unitils.version>
         <project.vaersion>1.0.7-SNAPSHOT</project.vaersion>
-        <!--<spring.version>4.2.5.RELEASE</spring.version>-->
-        <spring.version>3.2.17.RELEASE</spring.version>
+        <spring.version>4.2.5.RELEASE</spring.version>
+        <!--<spring.version>3.2.17.RELEASE</spring.version>-->
         <!-- <spring.version>3.2.3.RELEASE</spring.version>-->
         <mysql-connector-java.version>5.1.34</mysql-connector-java.version>
     </properties>
@@ -367,7 +409,7 @@
         <repository>
             <id>releases</id>
             <name>Releases</name>
-            <url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+            <url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -378,7 +420,7 @@
         <repository>
             <id>snapshots</id>
             <name>Snapshots</name>
-            <url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+            <url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -396,7 +438,7 @@
         <pluginRepository>
             <id>releases</id>
             <name>Releases</name>
-            <url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+            <url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -407,7 +449,7 @@
         <pluginRepository>
             <id>snapshots</id>
             <name>Snapshots</name>
-             <url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+             <url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -421,12 +463,12 @@
         <repository>
             <id>releases</id>
             <name>Releases</name>
-            <url>http://124.200.181.126:9091/nexus/content/repositories/releases/</url>
+            <url>http://123.103.90.5:9091/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Snapshots</name>
-            <url>http://124.200.181.126:9091/nexus/content/repositories/snapshots/</url>
+            <url>http://123.103.90.5:9091/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>

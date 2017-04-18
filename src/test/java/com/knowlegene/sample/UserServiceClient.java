@@ -35,7 +35,7 @@ import static org.testng.Assert.*;
  */
 public class UserServiceClient {
 
-    public static final String SERVER_URL = "http://localhost:8989/router";
+    public static final String SERVER_URL = "http://localhost:8080/osp-1.0.0-SNAPSHOT/router";
     public static final String APP_KEY = "00001";
     public static final String APP_SECRET = "abcdeabcdeabcdeabcdeabcde";
     private DefaultOspClient ospClient = new DefaultOspClient(SERVER_URL, APP_KEY, APP_SECRET);
@@ -48,12 +48,12 @@ public class UserServiceClient {
 
     @BeforeClass
     public void createSession() {
-        LogonRequest ropRequest = new LogonRequest();
-        ropRequest.setUserName("tomson");
-        ropRequest.setPassword("123456");
+        LogonRequest ospRequest = new LogonRequest();
+        ospRequest.setUserName("tomson");
+        ospRequest.setPassword("123456");
         //对服务发起调用并获得相应
         CompositeResponse response = ospClient.buildClientRequest()
-                                   .get(ropRequest, LogonResponse.class, "user.getSession", "1.0");
+                                   .get(ospRequest, LogonResponse.class, "user.getSession", "1.0");
         assertNotNull(response);
         assertTrue(response.isSuccessful());
         assertNotNull(response.getSuccessResponse());
@@ -134,13 +134,13 @@ public class UserServiceClient {
 
     @Test
     public void testAddUserByVersion3() {
-        CreateUserRequest ropRequest = new CreateUserRequest();
-        ropRequest.setUserName("tomson");
-        ropRequest.setSalary(2500L);
+        CreateUserRequest ospRequest = new CreateUserRequest();
+        ospRequest.setUserName("tomson");
+        ospRequest.setSalary(2500L);
         ospClient.setMessageFormat(MessageFormat.xml);
 
         CompositeResponse response = ospClient.buildClientRequest()
-                .post(ropRequest, CreateUserResponse.class, "user.add", "3.0");
+                .post(ospRequest, CreateUserResponse.class, "user.add", "3.0");
         assertNotNull(response);
         assertFalse(response.isSuccessful());
         assertNull(response.getSuccessResponse());

@@ -6,6 +6,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:osp="http://www.nswt.com/schema/osp"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:websocket="http://www.springframework.org/schema/websocket"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
@@ -13,6 +14,7 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.1.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
 ">
 
     <!-- 读取参数配置 -->
@@ -67,6 +69,16 @@
             </set>
         </property>
     </bean>
+
+    <!--websocket-->
+    <bean id="websocket" class="com.nswt.osp.websocket.handler.WebsocketEndPoint"/>
+
+    <websocket:handlers>
+        <websocket:mapping path="/websocket" handler="websocket"/>
+        <websocket:handshake-interceptors>
+            <bean class="com.nswt.osp.websocket.HandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
 
     <!-- ====================数据源1==================== -->
     <!-- sql会话模版 -->
